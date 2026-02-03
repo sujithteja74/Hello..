@@ -1,0 +1,798 @@
+<
+.stack .e2{top:12px;left:12px}
+.stack .e3{top:24px;left:24px}
+.stack .e4{top:36px;left:36px}
+
+/* PAGE 2 GRID */
+.grid{
+  position:relative;
+  width:600px;
+  height:400px;
+}
+.envelope{
+  width:220px;
+  height:120px;
+  background:#ed808b;
+  border-radius:6px;
+  position:absolute; /* relative se absolute kar diya */
+  cursor:pointer;
+  perspective:800px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+.env-label{
+  position:absolute;
+  top:55%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:cursive;
+  font-size:0.95rem;
+  color:white;
+  z-index:3;
+  pointer-events:none;
+  text-shadow:0 2px 5px rgba(0,0,0,0.25);
+  transition:opacity .3s ease;
+}
+
+/* FIXED POSITIONS SO THEY DON'T SHIFT */
+.envelope:nth-child(1){ top:0; left:0; }
+.envelope:nth-child(2){ top:0; right:0; }
+.envelope:nth-child(3){ bottom:0; left:0; }
+.envelope:nth-child(4){ bottom:0; right:0; }
+
+.flap{
+  position:absolute;width:100%;height:50px;background:#fbd3d3;
+  transform-origin:top;transition:transform .6s;
+  clip-path:polygon(0 0,100% 0,50% 100%);z-index:2;
+}
+.paper{
+  position:absolute;
+  width:80%;
+  height:80%;
+  background:#fff8dc;
+  left:10%;
+  bottom:55%;
+  border-radius:8px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  transform:translateY(60px) scale(0.8) rotate(-8deg);
+  opacity:0;
+  z-index:1;
+}
+
+/* 🔥 ENVELOPE OPEN PE ANIMATION */
+.open .paper{
+  animation:letterReveal 1.4s cubic-bezier(.68,-0.6,.32,1.6) forwards;
+}
+
+@keyframes letterReveal{
+  0%{
+    transform:translateY(80px) scale(0.6) rotate(-12deg);
+    opacity:0;
+  }
+  40%{
+    transform:translateY(-40px) scale(1.1) rotate(4deg);
+    opacity:1;
+  }
+  65%{
+    transform:translateY(-120px) scale(1.05) rotate(-2deg);
+  }
+  85%{
+    transform:translateY(-110px) scale(1.02) rotate(1deg);
+  }
+  100%{
+    transform:translateY(-120px) scale(1) rotate(0);
+    opacity:1;
+    box-shadow:0 25px 55px rgba(0,0,0,0.35);
+  }
+}
+
+.fade{
+  animation:fadeOut .6s forwards;
+  pointer-events:none;
+}
+
+@keyframes fadeOut{
+  to{
+    opacity:0;
+    transform:scale(0.5) rotate(10deg);
+  }
+}
+.open .env-label{
+  opacity:0;
+}
+
+/* MEMORY VIEW */
+#memoryView{
+  position:fixed;inset:0;display:none;justify-content:center;
+  align-items:center;text-align:center;padding:20px;
+  background-size:cover;background-position:center;color:#fff;
+}
+.memory-box{
+  background:rgba(0,0,0,0.6);padding:25px;border-radius:10px;
+  max-width:400px;
+}
+.back-btn{
+  margin-top:350px;padding:8px 20px;border:none;border-radius:20px;
+  background:var(--red);color:#fff;cursor:pointer;
+}
+
+/* ===== MEMORY PAPER CARD ===== */
+.memory-paper{
+  position:relative;
+  background:#fff8b0;
+  width:850px;          /* pehle 600 tha */
+  max-width:95%;
+  min-height:380px;     /* height bhi badhai */
+  border-radius:12px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  display:flex;
+  padding:30px;         /* andar ka space zyada */
+  gap:30px;
+  animation:paperPop .5s ease;
+}
+
+@keyframes paperPop{
+  from{transform:scale(0.5) rotate(-5deg);opacity:0;}
+  to{transform:scale(1) rotate(0);opacity:1;}
+}
+
+.paper-left{
+  width:38%;
+}
+
+.paper-left img{
+  width:120%;
+  height:320px;      /* fixed height */
+  object-fit:cover;  /* crop clean */
+  border-radius:10px;
+}
+
+.paper-right{
+  width:65%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:cursive;
+  font-size:1.1rem;
+  color:#444;
+  text-align:left;
+  line-height:1.7;
+  padding-left:40px;   /* ⭐ text ko photo se door karega */
+
+}
+
+/* HEARTS */
+.heart{position:fixed;top:-20px;font-size:20px;color:#ff4d6d;
+animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(110vh);opacity:0;}}
+
+.overlay-btn{
+  position: absolute;
+    top: 48%;
+    left: 116%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+}
+/* ===== NEW PAGE 1 LAYOUT ===== */
+
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:all 1s ease;
+}
+.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(1.1);
+}
+
+.hero{
+  display:flex;
+  align-items:center;
+  gap:80px;
+}
+
+/* TITLE RIGHT SIDE */
+.side-title{
+  font-family:cursive;
+  color:var(--red);
+  font-size:3rem;
+  white-space:nowrap;
+}
+
+/* STACK BIG ENVELOPES */
+.stack{
+  position:relative;
+  width:420px;
+  height:260px;
+}
+
+.stack .env{
+  width:400px;
+  height:200px;
+  background:#ed808b;
+  border-radius:10px;
+  position:absolute;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+.stack .env::before{
+  content:"";
+  position:absolute;
+  top:0;
+  width:100%;
+  height:80px;
+  background: #fbd3d3;;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+}
+
+.e1{top:0;left:0}
+.e2{top:15px;left:15px}
+.e3{top:30px;left:30px}
+.e4{top:45px;left:45px}
+
+.overlay-btn{
+  position:absolute;
+  top:50%;
+  left:55%;
+  transform:translate(-50%,-50%);
+  z-index:10;
+  padding:10px 30px;
+  font-size:1rem;
+}
+
+@media(max-width:768px){
+  .hero{
+    flex-direction:column;
+    gap:30px;
+  }
+  .side-title{
+    font-size:2rem;
+  }
+}
+#finalSurprise{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+}
+/* ===== PAGE 1 FLOATING HEARTS BG ===== */
+.bg-heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:18px;
+  color:#ff4d6d;
+  animation:floatUp linear forwards;
+  opacity:0.7;
+  pointer-events:none;
+}
+
+@keyframes floatUp{
+  to{
+    transform:translateY(-110vh) scale(1.3);
+    opacity:0;
+  }
+}
+
+/* ===== GLOWING TITLE ===== */
+.side-title{
+  animation:glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 5px #ff4d6d, 0 0 10px #ff758f; }
+  to{ text-shadow:0 0 20px #ff4d6d, 0 0 35px #ff1e56; }
+}
+
+/* ===== FLOATING ENVELOPE STACK ===== */
+.stack{
+  animation:floatStack 2s ease-in-out infinite;
+}
+
+@keyframes floatStack{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+  100%{transform:translateY(0)}
+}
+/* ===== PAGE 2 ENTRY ANIMATION ===== */
+#page2{
+  transform:scale(1.2);
+  opacity:0;
+}
+
+#page2.show{
+  animation:page2Entry 1s ease forwards;
+}
+
+@keyframes page2Entry{
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+/* ===== PAGE 2 FALLING HEARTS ===== */
+.bg-heart2{
+  position:fixed;
+  top:-20px;
+  font-size:18px;
+  animation:fall2 linear forwards;
+  pointer-events:none;
+  opacity:0.8;
+}
+
+@keyframes fall2{
+  to{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+}
+/* ===== ENVELOPE HOVER FLOAT EFFECT ===== */
+.envelope{
+  transition:transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.envelope:hover{
+  transform:translateY(-12px) scale(1.05) rotate(-2deg);
+  box-shadow:0 20px 35px rgba(0,0,0,0.25);
+}
+/* ===== ENVELOPE FLY-IN ANIMATION ===== */
+.envelope{
+  opacity:0;
+}
+
+.fly1{animation:fly1 1.2s ease forwards; animation-delay:0s;}
+.fly2{animation:fly2 1.2s ease forwards; animation-delay:0.25s;}
+.fly3{animation:fly3 1.2s ease forwards; animation-delay:0.5s;}
+.fly4{animation:fly4 1.2s ease forwards; animation-delay:0.75s;}
+
+@keyframes fly1{
+  0%{transform:translate(-400px,-300px) scale(0.5) rotate(-20deg);opacity:0;}
+  80%{transform:translate(0,0) scale(1.1);}
+  100%{transform:translate(0,0) scale(1) rotate(0);opacity:1;}
+}
+
+@keyframes fly2{
+  from{transform:translate(400px,-300px) scale(0.5) rotate(20deg);opacity:0;}
+  to{transform:translate(0,0) scale(1) rotate(0);opacity:1;}
+}
+
+@keyframes fly3{
+  from{transform:translate(-400px,300px) scale(0.5) rotate(-20deg);opacity:0;}
+  to{transform:translate(0,0) scale(1) rotate(0);opacity:1;}
+}
+
+@keyframes fly4{
+  from{transform:translate(400px,300px) scale(0.5) rotate(20deg);opacity:0;}
+  to{transform:translate(0,0) scale(1) rotate(0);opacity:1;}
+}
+#lovePosterScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle,#ffe3e8,#ffb3c1);
+  overflow:hidden;
+}
+
+/* Poster card */
+.love-poster{
+  background:#fff8b0;
+  border:4px solid #ff4d6d;
+  padding:50px 90px;
+  border-radius:20px;
+  font-size:3.2rem;
+  font-family:cursive;
+  color:#ff1e56;
+  text-align:center;
+  box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  animation:posterEntry 1s ease, floatPoster 3s ease-in-out infinite;
+  position:relative;
+}
+
+/* 💖 Romantic Glow Aura */
+.love-poster{
+  background:#fffcdb;
+  border:4px solid #ffb704;
+  padding:50px 90px;
+  border-radius:20px;
+  font-size:3.2rem;
+  font-family:cursive;
+  color:#db0000;
+  text-align:center;
+  position:relative;
+  animation:
+    posterEntry 1s ease,
+    floatPoster 3s ease-in-out infinite,
+    glowPulse 2s ease-in-out infinite;
+  
+  box-shadow:
+    0 0 25px #c95b6f,
+    0 0 50px #ef899c,
+    0 0 80px rgba(249, 120, 144, 0.6);
+}
+
+/* Soft outer aura */
+.love-poster::before{
+  content:"";
+  position:absolute;
+  inset:-20px;
+  border-radius:30px;
+  background:radial-gradient(circle, rgba(255,77,109,0.25), transparent 70%);
+  filter:blur(20px);
+  z-index:-1;
+}
+
+/* Glow breathing */
+@keyframes glowPulse{
+  0%{
+    box-shadow:
+      0 0 15px #ff4d6d,
+      0 0 30px #ff758f,
+      0 0 50px rgba(255,77,109,0.4);
+  }
+  100%{
+    box-shadow:
+      0 0 35px #ff1e56,
+      0 0 65px #ff4d6d,
+      0 0 95px rgba(255,30,86,0.8);
+  }
+}
+
+/* Animations */
+@keyframes posterEntry{
+  from{transform:scale(0.3) rotate(-10deg);opacity:0;}
+  to{transform:scale(1) rotate(0);opacity:1;}
+}
+
+@keyframes floatPoster{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+  100%{transform:translateY(0)}
+}
+
+/* ===== APOLOGY TEXT ANIMATION ===== */
+.apology-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0px;
+  font-family:cursive;
+  text-align:center;
+  color:#d60036;
+  font-size:1.6rem;
+  margin-bottom:20px;
+}
+
+.line{
+  opacity:0;
+  transform:translateY(30px);
+}
+
+/* One by one reveal */
+.l1{ animation:fadeLine .8s ease forwards; animation-delay:0.3s; }
+.l2{ animation:fadeLine .8s ease forwards; animation-delay:1.4s; }
+.l3{ animation:fadeLine .8s ease forwards; animation-delay:2.5s; }
+
+@keyframes fadeLine{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* vanish animation */
+.apology-hide{
+  animation:byeText .6s ease forwards;
+}
+
+@keyframes byeText{
+  to{
+    opacity:0;
+    transform:scale(0.8);
+  }
+}
+#finalSurprise{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  gap:1px;
+  overflow:hidden; /* important */
+}
+
+/* BLUR BACKGROUND IMAGE */
+#finalSurprise::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('your-image.jpg') center/300px no-repeat; /* size same as before */
+  filter:blur(1.5px) brightness(0.7); /* 👈 blur + thoda dark */
+  z-index:0;
+}
+
+/* content upar dikhe */
+.apology-box,
+#finalSurprise button{
+  position:relative;
+  z-index:1;
+}
+
+</style>
+</head>
+
+<body>
+  <audio id="bgMusic" loop>
+  <source src="saiyarra.aac" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page">
+  <div class="hero">
+
+    <div class="stack">
+      <div class="env e1"></div>
+      <div class="env e2"></div>
+      <div class="env e3"></div>
+      <div class="env e4"></div>
+      <button class="tap-btn overlay-btn" onclick="goToPage2()">Tap 💌</button>
+    </div>
+
+    <h1 class="side-title"><b> Hello CHANDANA  Something from my heart…  🤍</b></h1>
+
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page hidden">
+  <div class="grid">
+    <div class="envelope" onclick="openMemory(1,this)">
+  <div class="flap"></div>
+  <span class="env-label">Just You 🤍
+</span>
+  <div class="paper"></div>
+</div>
+
+<div class="envelope" onclick="openMemory(2,this)">
+  <div class="flap"></div>
+  <span class="env-label">Feelings ✨
+</span>
+  <div class="paper"></div>
+</div>
+
+<div class="envelope" onclick="openMemory(3,this)">
+  <div class="flap"></div>
+  <span class="env-label">About YOU ✨</span>
+  <div class="paper"></div>
+</div>
+
+<div class="envelope" onclick="openMemory(4,this)">
+  <div class="flap"></div>
+  <span class="env-label">Still you ❤️
+</span>
+  <div class="paper"></div>
+</div>
+
+  </div>
+</div>
+<!-- FINAL SURPRISE -->
+<div id="finalSurprise" style="display:none; text-align:center; flex-direction:column; align-items:center;">
+  <div class="apology-box">
+  <p class="line l1"><b>I know you're Felling Uncomfortable</b></p>
+  <p class="line l2"><b>I'm really sorry for the inconvinience.</b></p>
+  <p class="line l3"><b>At Last It's All about YOUUU....?</b></p>
+</div>
+
+  <button class="tap-btn" style="margin-top:20px; font-size:1.1rem;" onclick="forgiveAction()">Stay with me? ❤️
+</button>
+</div>
+<!-- I LOVE YOU POSTER -->
+<div id="lovePosterScreen" style="display:none;">
+  <div class="love-poster">
+    <b>I LOVE YOUUUUU ❤️</b>
+  </div>
+</div>
+<div id="memoryView">
+  <div class="memory-paper">
+    <div class="paper-left">
+      <img id="memoryImg">
+    </div>
+    <div class="paper-right">
+      <p id="memoryText"></p>
+    </div>
+    <button class="back-btn" onclick="closeMemory()">Back</button>
+  </div>
+</div>
+
+<script>
+  let bgHeartInterval;
+let page2HeartInterval;
+
+  let openedCount = 0;
+let openedSet = new Set();
+
+const memories={
+1:{img:"rose.png",text:"Since I Have seen YOU MY ENTIRE SKY CRAVES ONLY YOUR STAR ......🫴"
+},
+2:{img:"second.png",text:"I Didn't the perfect Reason Nuvu Bayapadthunavo telidhu to be frank I have More Afraid than YOU but you gave me a reply THAT which HURTS me more . BUT i know what will be the Answer YOU are the UNIQUE girl then how the unique is normal I know youre single"
+},
+3:{img:"third.png",text:"I will promise YOU that i will NEVER Leave and I WILL HOLD YOUUU NEVER 🫴...."
+},
+4:{img:"four.png",text:"NO MATTER AT LAST ....FINALLY 'LOVE is like TWO unconditional Duties That ONE can PERFORM...And  THE DUTY IS YOURSS THE ONE IS YOUUU ' AT last Nannu EPUDU odileyanu ani promise Chesthava I LOVE YOUUUU....."
+}
+};
+
+let heartInterval;
+function goToPage2(){
+  document.getElementById("bgMusic").play();
+
+  stopBGHearts();
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+  page2.classList.add("show");
+  startPage2Hearts();
+
+  // envelopes ko select karo
+  const envs = document.querySelectorAll(".envelope");
+
+  envs[0].classList.add("fly1");
+  envs[1].classList.add("fly2");
+  envs[2].classList.add("fly3");
+  envs[3].classList.add("fly4");
+}
+
+window.onload = () => {
+  startBGHearts();
+};
+
+function openMemory(num, el){
+  if(openedSet.has(num)) return; // repeat count na ho
+  openedSet.add(num);
+  openedCount++;
+
+  el.classList.add("open");
+  setTimeout(()=>{
+  el.classList.add("fade");
+  // animation ke baad element hata do
+  setTimeout(()=>{
+    el.style.display = "none";
+  },600);
+
+},900);
+  setTimeout(()=>{
+  memoryView.style.display="flex";
+  memoryView.style.backgroundImage="none"; // background image hata diya
+  memoryImg.src = memories[num].img; // image left side
+  typeWriter(memories[num].text);    // typing effect text
+  startHearts();
+},1200);
+}
+function startBGHearts(){
+  bgHeartInterval = setInterval(()=>{
+    const h = document.createElement("div");
+    h.className = "bg-heart";
+    h.innerHTML = "💖";
+    h.style.left = Math.random()*100 + "vw";
+    h.style.animationDuration = (Math.random()*4+3) + "s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  },100);
+}
+function startPage2Hearts(){
+  page2HeartInterval=setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="bg-heart2";
+    h.innerHTML="💗";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*3+3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },400);
+}
+function stopPage2Hearts(){
+  clearInterval(page2HeartInterval);
+  document.querySelectorAll(".bg-heart2").forEach(h=>h.remove());
+}
+function stopBGHearts(){
+  clearInterval(bgHeartInterval);
+  document.querySelectorAll(".bg-heart").forEach(h=>h.remove());
+}
+function closeMemory(){
+  memoryView.style.display="none";
+  stopHearts();
+  if(openedCount === 4){
+    showFinalSurprise();
+  }
+}
+function startHearts(){
+  heartInterval=setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  },300);
+}
+function stopHearts(){
+  clearInterval(heartInterval);
+  document.querySelectorAll(".heart").forEach(h=>h.remove());
+}
+function showFinalSurprise(){
+  document.querySelector(".grid").style.display="none";
+  finalSurprise.style.display="flex";
+}
+function forgiveAction(){
+  document.querySelector(".apology-box").classList.add("apology-hide");
+  setTimeout(()=>{
+    document.getElementById("finalSurprise").style.display="none";
+    document.getElementById("lovePosterScreen").style.display="flex";
+  },600);
+}
+function typeWriter(text){
+  memoryText.innerHTML = "";
+  let i = 0;
+  const speed = 40; // typing speed
+  function type(){
+    if(i < text.length){
+      memoryText.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
+</script>
+</body>
+</html>
+!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hii CHANDANA Letters For You ❤️</title>
+
+<style>
+:root{--red:#ff4d6d;--bg:#ffe3e8;}
+body{margin:0;font-family:'Segoe UI',sans-serif;background:var(--bg);overflow:hidden}
+
+/* PAGES */
+
+.tap-btn{margin-top: 16px;
+    padding: 5px 25px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;}
+
+.stack .env{
+  width: 400px;
+    height: 200px;
+    background: #ff9a9a;
+    border-radius: 8px;
+    position: absolute;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* flap size bhi adjust */
+.stack .env::before{
+  content:"";
+  position:absolute;
+  top:0;
+  width:100%;
+  height:75px;
+  background:#f9c5ca;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+}
+
+/* stack offsets thode adjust */
+.stack .e1{top:0;left:0}
